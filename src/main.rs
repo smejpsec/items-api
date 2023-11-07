@@ -1,27 +1,6 @@
-use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
-use serde::{Deserialize, Serialize};
+use actix_web::{App, HttpServer};
+use handler::services::*;
 use std::{env, net::Ipv4Addr};
-
-#[derive(Debug, Serialize)]
-struct Item {
-    name: String,
-    amount: i32,
-}
-
-#[derive(Debug, Deserialize)]
-struct ItemQuery {
-    name: String,
-}
-
-#[get("/api/items")]
-async fn get_item(query: web::Query<ItemQuery>) -> impl Responder {
-    // TODO: 在庫確認処理
-    let name = (query.name).to_string();
-    let amount = 30;
-
-    let item = Item { name, amount };
-    HttpResponse::Ok().json(item)
-}
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
